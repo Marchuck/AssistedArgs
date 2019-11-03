@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".intro.IntroFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
-            android:text="A"
-            android:layout_margin="16dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/a"
+    <EditText
+            android:id="@+id/latitude"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:hint="latitude"
+            android:inputType="numberDecimal" />
+
+    <EditText
+            android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:hint="longitude"
+            android:inputType="numberDecimal" />
 
     <androidx.appcompat.widget.AppCompatButton
-            android:text="B"
-            android:layout_margin="16dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/b"
+            android:id="@+id/send_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:text="C"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
-            android:id="@+id/c"
-            android:layout_height="wrap_content"/>
+            android:text="SEND" />
 
 </LinearLayout>

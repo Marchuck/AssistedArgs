@@ -1,60 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@id/introFragment"
-            android:id="@+id/navigation_graph">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_graph"
+        app:startDestination="@id/introFragment">
 
     <fragment
+            android:id="@+id/introFragment"
             android:name="pl.marczak.assistedargs.intro.IntroFragment"
-            tools:layout="@layout/intro_fragment"
             android:label="intro"
-            android:id="@+id/introFragment">
+            tools:layout="@layout/intro_fragment">
 
-        <action android:id="@+id/navigate_to_filters">
+        <action
+                android:id="@+id/navigate_to_filters"
+                app:destination="@+id/filtersFragment">
 
-            <argument android:name="location"
-                      app:argType="android.location.Location"
-                      app:nullable="false"/>
+            <argument
+                    android:name="location"
+                    android:defaultValue="@null"
+                    app:argType="pl.marczak.assistedargs.Location"
+                    app:nullable="true" />
         </action>
 
     </fragment>
 
     <fragment
+            android:id="@+id/filtersFragment"
             android:name="pl.marczak.assistedargs.filters.FiltersFragment"
-            tools:layout="@layout/filters_fragment"
             android:label="filters"
-            android:id="@+id/filtersFragment">
+            tools:layout="@layout/filters_fragment">
 
-        <argument android:name="location"
-                  app:argType="android.location.Location"
-                  app:nullable="false"/>
+        <argument
+                android:name="location"
+                android:defaultValue="@null"
+                app:argType="pl.marczak.assistedargs.Location"
+                app:nullable="true" />
 
-        <action android:id="@+id/navigate_to_list">
+        <action
+                android:id="@+id/navigate_to_list"
+                app:destination="@+id/listFragment">
 
-            <argument android:name="location"
-                      app:argType="android.location.Location"
-                      app:nullable="false"/>
+            <argument
+                    android:defaultValue="@null"
+                    android:name="location"
+                    app:argType="pl.marczak.assistedargs.Location"
+                    app:nullable="true" />
 
-            <argument android:name="filter"
-                      app:argType="pl.marczak.assistedargs.filters.FilterParam"
-                      app:nullable="false"/>
+            <argument
+                    android:name="filter"
+                    android:defaultValue="@null"
+                    app:argType="pl.marczak.assistedargs.filters.FilterType"
+                    app:nullable="true" />
         </action>
 
     </fragment>
 
     <fragment
+            android:id="@+id/listFragment"
             android:name="pl.marczak.assistedargs.list.ListFragment"
-            tools:layout="@layout/list_fragment"
             android:label="list"
-            android:id="@+id/listFragment">
+            tools:layout="@layout/list_fragment">
 
-        <argument android:name="location"
-                  app:argType="android.location.Location"
-                  app:nullable="false"/>
+        <argument
+                android:name="location"
+                android:defaultValue="@null"
+                app:argType="pl.marczak.assistedargs.Location"
+                app:nullable="true" />
 
-        <argument android:name="filter"
-                  app:argType="pl.marczak.assistedargs.filters.FilterParam"
-                  app:nullable="false"/>
+        <argument
+                android:name="filter"
+                android:defaultValue="@null"
+                app:argType="pl.marczak.assistedargs.filters.FilterType"
+                app:nullable="true" />
     </fragment>
 
 </navigation>

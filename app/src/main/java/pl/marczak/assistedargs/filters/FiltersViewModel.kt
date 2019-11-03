@@ -1,7 +1,7 @@
 package pl.marczak.assistedargs.filters
 
-import android.location.Location
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.inject.assisted.Assisted
@@ -10,6 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pl.marczak.assistedargs.LiveEvent
+import pl.marczak.assistedargs.Location
+import pl.marczak.assistedargs.di.assisted.AssistedViewModelFactory
 import java.io.Serializable
 import javax.inject.Inject
 
@@ -26,19 +28,26 @@ enum class FilterType : Serializable {
     BLACK, RED, WHITE
 }
 
-data class FilterParam(
-    val filterType: FilterType,
-    val location: Location
-) : Serializable
-
 class FiltersViewModel @AssistedInject constructor(
     private val provideFiltersUseCase: ProvideFiltersUseCase,
-    @Assisted private val location: Location
+    @Assisted private val handle: SavedStateHandle
 ) :
     ViewModel() {
 
-    val pickedFilter = LiveEvent<FilterParam>()
+    @AssistedInject.Factory
+    interface Factory : AssistedViewModelFactory<FiltersViewModel>
+
+    var location: Location = handle["location"] ?: Location(-1.0, -1.0)
+        set(value) {
+            handle["location"] = value
+            locationLiveData.value = value
+            field = value
+        }
+
+    val pickedFilters = LiveEvent<Pair<FilterType, Location>>()
     val results = MutableLiveData<List<FilterType>>()
+
+    val locationLiveData = MutableLiveData<Location>()
 
     fun setup() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -48,6 +57,6 @@ class FiltersViewModel @AssistedInject constructor(
     }
 
     fun onFilterChosen(filter: FilterType) {
-        pickedFilter.value = FilterParam(filter, location)
+        pickedFilters.value = filter to location
     }
 }

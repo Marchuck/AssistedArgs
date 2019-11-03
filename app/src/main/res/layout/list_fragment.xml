@@ -7,8 +7,12 @@
         tools:context=".list.ListFragment">
 
     <TextView
+            android:gravity="center"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:id="@+id/results"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello"/>
+            tools:text="Hello"/>
 
 </FrameLayout>

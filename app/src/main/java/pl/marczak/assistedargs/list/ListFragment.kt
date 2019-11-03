@@ -1,21 +1,28 @@
 package pl.marczak.assistedargs.list
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.list_fragment.*
 import pl.marczak.assistedargs.R
+import pl.marczak.assistedargs.base.BaseFragment
+import javax.inject.Inject
 
-class ListFragment : Fragment() {
+class ListFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = ListFragment()
+    val args: ListFragmentArgs by safeNavArgs()
+
+    @Inject
+    lateinit var factory: ListViewModel.Factory
+
+    val viewModel: ListViewModel by assistedViewModel(args.toBundle(), factory)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        appComponent.inject(this)
     }
-
-    private lateinit var viewModel: ListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +33,13 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        viewModel.setup()
+
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            results.text = it
+        })
+
     }
 
 }
