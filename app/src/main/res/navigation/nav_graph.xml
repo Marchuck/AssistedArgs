@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/navigation_graph"
+        android:id="@+id/nav_graph"
         app:startDestination="@id/introFragment">
 
     <fragment
@@ -17,9 +17,8 @@
 
             <argument
                     android:name="location"
-                    android:defaultValue="@null"
                     app:argType="pl.marczak.assistedargs.Location"
-                    app:nullable="true" />
+                    app:nullable="false" />
         </action>
 
     </fragment>
@@ -32,25 +31,22 @@
 
         <argument
                 android:name="location"
-                android:defaultValue="@null"
                 app:argType="pl.marczak.assistedargs.Location"
-                app:nullable="true" />
+                app:nullable="false" />
 
         <action
                 android:id="@+id/navigate_to_list"
                 app:destination="@+id/listFragment">
 
             <argument
-                    android:defaultValue="@null"
                     android:name="location"
                     app:argType="pl.marczak.assistedargs.Location"
-                    app:nullable="true" />
+                    app:nullable="false" />
 
             <argument
                     android:name="filter"
-                    android:defaultValue="@null"
                     app:argType="pl.marczak.assistedargs.filters.FilterType"
-                    app:nullable="true" />
+                    app:nullable="false" />
         </action>
 
     </fragment>
@@ -63,15 +59,13 @@
 
         <argument
                 android:name="location"
-                android:defaultValue="@null"
                 app:argType="pl.marczak.assistedargs.Location"
-                app:nullable="true" />
+                app:nullable="false" />
 
         <argument
                 android:name="filter"
-                android:defaultValue="@null"
                 app:argType="pl.marczak.assistedargs.filters.FilterType"
-                app:nullable="true" />
+                app:nullable="false" />
     </fragment>
 
 </navigation>

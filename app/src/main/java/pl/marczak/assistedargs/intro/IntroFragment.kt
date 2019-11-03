@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import kotlinx.android.synthetic.main.intro_fragment.*
 import pl.marczak.assistedargs.Location
 import pl.marczak.assistedargs.R
@@ -28,15 +29,11 @@ class IntroFragment : BaseFragment() {
             val latitude = lat.toDoubleOrNull() ?: 0.0
             val longitude = lon.toDoubleOrNull() ?: 0.0
 
-            val action = IntroFragmentDirections.navigateToFilters()
-                .setLocation(
-                    Location(
-                        latitude,
-                        longitude
-                    )
-                )
-            findNavController().navigate(action)
+            val location = Location(
+                latitude,
+                longitude
+            )
+            findNavController().navigate(R.id.navigate_to_filters, bundleOf("location" to location))
         }
     }
-
 }

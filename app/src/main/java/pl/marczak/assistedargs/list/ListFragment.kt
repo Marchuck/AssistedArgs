@@ -12,12 +12,10 @@ import javax.inject.Inject
 
 class ListFragment : BaseFragment() {
 
-    val args: ListFragmentArgs by safeNavArgs()
-
     @Inject
     lateinit var factory: ListViewModel.Factory
 
-    val viewModel: ListViewModel by assistedViewModel(args.toBundle(), factory)
+    val viewModel: ListViewModel by assistedViewModel { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

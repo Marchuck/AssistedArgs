@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 
-class AssistedSafeArgsViewModelFactory<T : ViewModel>(
+class AssistedArgsViewModelFactory<T : ViewModel>(
     private val factory: AssistedViewModelFactory<T>,
     owner: SavedStateRegistryOwner,
     private val defaultArgs: Bundle
@@ -19,10 +19,15 @@ class AssistedSafeArgsViewModelFactory<T : ViewModel>(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-        for (key in defaultArgs.keySet()) {
-            handle[key] = defaultArgs[key]
-        }
-        return factory.create(handle) as? T
-            ?: throw IllegalStateException("Unknown ViewModel class")
+
+        return factory.create(handle.withArgs(defaultArgs)) as? T
+            ?: throw IllegalStateException("Unknown ViewModel class \'${modelClass.simpleName}\'")
     }
+}
+
+private fun SavedStateHandle.withArgs(defaultArgs: Bundle): SavedStateHandle {
+    for (key in defaultArgs.keySet()) {
+        this[key] = defaultArgs[key]
+    }
+    return this
 }

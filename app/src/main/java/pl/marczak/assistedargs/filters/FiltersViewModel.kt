@@ -47,7 +47,9 @@ class FiltersViewModel @AssistedInject constructor(
     val pickedFilters = LiveEvent<Pair<FilterType, Location>>()
     val results = MutableLiveData<List<FilterType>>()
 
-    val locationLiveData = MutableLiveData<Location>()
+    val locationLiveData = MutableLiveData<Location>().apply {
+        value = location
+    }
 
     fun setup() {
         viewModelScope.launch(Dispatchers.Main) {

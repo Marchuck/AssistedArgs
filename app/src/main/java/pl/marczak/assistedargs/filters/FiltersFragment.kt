@@ -4,26 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.filters_fragment.*
 import pl.marczak.assistedargs.R
 import pl.marczak.assistedargs.base.BaseFragment
+import pl.marczak.assistedargs.filters.FilterType.*
 import javax.inject.Inject
 
 class FiltersFragment : BaseFragment() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
     }
 
-    val args: FiltersFragmentArgs by safeNavArgs()
-
     @Inject
     lateinit var factory: FiltersViewModel.Factory
 
-    val viewModel: FiltersViewModel by assistedViewModel(args.toBundle(), factory)
+    val viewModel: FiltersViewModel by assistedViewModel { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,13 +38,13 @@ class FiltersFragment : BaseFragment() {
         viewModel.setup()
 
         black.setOnClickListener {
-            viewModel.onFilterChosen(FilterType.BLACK)
+            viewModel.onFilterChosen(BLACK)
         }
         red.setOnClickListener {
-            viewModel.onFilterChosen(FilterType.RED)
+            viewModel.onFilterChosen(RED)
         }
         white.setOnClickListener {
-            viewModel.onFilterChosen(FilterType.WHITE)
+            viewModel.onFilterChosen(WHITE)
         }
 
         viewModel.locationLiveData.observe(viewLifecycleOwner, Observer {
@@ -52,11 +52,26 @@ class FiltersFragment : BaseFragment() {
         })
 
         viewModel.pickedFilters.observe(viewLifecycleOwner, Observer {
+
+
+
             val (filterType, location) = it
-            val action = FiltersFragmentDirections.navigateToList().setLocation(location)
-                .setFilter(filterType)
-            findNavController().navigate(action)
+            findNavController().navigate(
+                R.id.navigate_to_list, bundleOf(
+                    "filter" to filterType,
+                    "location" to location
+                )
+            )
         })
+    }
+
+    @IdRes
+    private fun mapTo(key: FilterType): Int {
+        return when (key) {
+            BLACK -> R.id.black
+            RED -> R.id.red
+            WHITE -> R.id.white
+        }
     }
 
 }
