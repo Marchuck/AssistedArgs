@@ -37,7 +37,5 @@ class ListFragment : BaseFragment() {
         viewModel.message.observe(viewLifecycleOwner, Observer {
             results.text = it
         })
-
     }
-
 }

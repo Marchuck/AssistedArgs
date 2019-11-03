@@ -15,19 +15,6 @@ import pl.marczak.assistedargs.di.assisted.AssistedViewModelFactory
 import java.io.Serializable
 import javax.inject.Inject
 
-
-class ProvideFiltersUseCase @Inject constructor() {
-
-    suspend fun execute(location: Location): List<FilterType> {
-        delay(300)
-        return arrayListOf(FilterType.BLACK, FilterType.RED, FilterType.WHITE)
-    }
-}
-
-enum class FilterType : Serializable {
-    BLACK, RED, WHITE
-}
-
 class FiltersViewModel @AssistedInject constructor(
     private val provideFiltersUseCase: ProvideFiltersUseCase,
     @Assisted private val handle: SavedStateHandle
@@ -44,6 +31,7 @@ class FiltersViewModel @AssistedInject constructor(
             field = value
         }
 
+    val selectedFilter = MutableLiveData<FilterType>()
     val pickedFilters = LiveEvent<Pair<FilterType, Location>>()
     val results = MutableLiveData<List<FilterType>>()
 
@@ -59,6 +47,7 @@ class FiltersViewModel @AssistedInject constructor(
     }
 
     fun onFilterChosen(filter: FilterType) {
+        selectedFilter.value = filter
         pickedFilters.value = filter to location
     }
 }

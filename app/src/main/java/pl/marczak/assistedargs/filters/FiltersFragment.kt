@@ -1,11 +1,13 @@
 package pl.marczak.assistedargs.filters
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
+import android.widget.Button
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.filters_fragment.*
 import pl.marczak.assistedargs.R
@@ -51,10 +53,15 @@ class FiltersFragment : BaseFragment() {
             current_location.text = "${it.latitude} | ${it.longitude}"
         })
 
+        viewModel.selectedFilter.observe(viewLifecycleOwner, Observer {
+            clearSelection()
+            when (it) {
+                BLACK -> black.setTextColor(Color.RED)
+                RED -> red.setTextColor(Color.RED)
+                WHITE -> white.setTextColor(Color.RED)
+            }
+        })
         viewModel.pickedFilters.observe(viewLifecycleOwner, Observer {
-
-
-
             val (filterType, location) = it
             findNavController().navigate(
                 R.id.navigate_to_list, bundleOf(
@@ -65,13 +72,11 @@ class FiltersFragment : BaseFragment() {
         })
     }
 
-    @IdRes
-    private fun mapTo(key: FilterType): Int {
-        return when (key) {
-            BLACK -> R.id.black
-            RED -> R.id.red
-            WHITE -> R.id.white
+    private fun clearSelection() {
+        for (v in filters_fragment_rootview.children) {
+            if (v is Button) {
+                v.setTextColor(Color.BLACK)
+            }
         }
     }
-
 }

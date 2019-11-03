@@ -14,14 +14,6 @@ import pl.marczak.assistedargs.di.assisted.AssistedViewModelFactory
 import pl.marczak.assistedargs.filters.FilterType
 import javax.inject.Inject
 
-
-class ListUseCase @Inject constructor() {
-    suspend fun execute(filterParam: FilterType): String {
-        delay(200)
-        return "executed with [$filterParam]"
-    }
-}
-
 class ListViewModel @AssistedInject constructor(
     private val useCase: ListUseCase,
     @Assisted private val handle: SavedStateHandle

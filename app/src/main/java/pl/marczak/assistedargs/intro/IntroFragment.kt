@@ -23,17 +23,21 @@ class IntroFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         send_button.setOnClickListener {
-            val lat = latitude.text.toString().trim()
-            val lon = longitude.text.toString().trim()
-
-            val latitude = lat.toDoubleOrNull() ?: 0.0
-            val longitude = lon.toDoubleOrNull() ?: 0.0
-
-            val location = Location(
-                latitude,
-                longitude
-            )
+            val location = getCurrentLocation()
             findNavController().navigate(R.id.navigate_to_filters, bundleOf("location" to location))
         }
+    }
+
+    private fun getCurrentLocation() = run {
+        val lat = latitude.text.toString().trim()
+        val lon = longitude.text.toString().trim()
+
+        val latitude = lat.toDoubleOrNull() ?: 0.0
+        val longitude = lon.toDoubleOrNull() ?: 0.0
+
+        Location(
+            latitude,
+            longitude
+        )
     }
 }
