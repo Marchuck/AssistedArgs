@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@id/introFragment"
+            android:id="@+id/navigation_graph">
+
+    <fragment
+            android:name="pl.marczak.assistedargs.intro.IntroFragment"
+            tools:layout="@layout/intro_fragment"
+            android:label="intro"
+            android:id="@+id/introFragment">
+
+        <action android:id="@+id/navigate_to_filters">
+
+            <argument android:name="location"
+                      app:argType="android.location.Location"
+                      app:nullable="false"/>
+        </action>
+
+    </fragment>
+
+    <fragment
+            android:name="pl.marczak.assistedargs.filters.FiltersFragment"
+            tools:layout="@layout/filters_fragment"
+            android:label="filters"
+            android:id="@+id/filtersFragment">
+
+        <argument android:name="location"
+                  app:argType="android.location.Location"
+                  app:nullable="false"/>
+
+        <action android:id="@+id/navigate_to_list">
+
+            <argument android:name="location"
+                      app:argType="android.location.Location"
+                      app:nullable="false"/>
+
+            <argument android:name="filter"
+                      app:argType="pl.marczak.assistedargs.filters.FilterParam"
+                      app:nullable="false"/>
+        </action>
+
+    </fragment>
+
+    <fragment
+            android:name="pl.marczak.assistedargs.list.ListFragment"
+            tools:layout="@layout/list_fragment"
+            android:label="list"
+            android:id="@+id/listFragment">
+
+        <argument android:name="location"
+                  app:argType="android.location.Location"
+                  app:nullable="false"/>
+
+        <argument android:name="filter"
+                  app:argType="pl.marczak.assistedargs.filters.FilterParam"
+                  app:nullable="false"/>
+    </fragment>
+
+</navigation>
